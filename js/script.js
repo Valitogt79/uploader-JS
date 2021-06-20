@@ -12,6 +12,7 @@ const uploader = (file) => {
   //* Creando la petición
   xhr.addEventListener("readystatechange", (e) => {
     if (xhr.readyState !== 4) return;
+
     if (xhr.status >= 200 && xhr.status < 300) {
       let json = JSON.parse(xhr.responseText);
       console.log(json);
