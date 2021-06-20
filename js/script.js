@@ -13,7 +13,8 @@ const uploader = (file) => {
   xhr.addEventListener("readystatechange", (e) => {
     if (xhr.readyState !== 4) return;
     if (xhr.status >= 200 && xhr.status < 300) {
-      console.log(xhr.responseText);
+      let json = JSON.parse(xhr.responseText);
+      console.log(json);
     } else {
       let message = xhr.statusText || "Ocurrió un Error";
       console.error(`${xhr.status}: ${message}`);
