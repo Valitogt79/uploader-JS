@@ -26,11 +26,30 @@ const uploader = (file) => {
   xhr.send(formData);
 };
 
+/* Barra de progreso a la carga de los archivos. */
+const progressUpload = (file) => {
+  const $progress = d.createElement("progress"),
+    $span = d.createElement("span");
+
+  $progress.value = 0;
+  $progress.max = 100;
+  $main.insertAdjacentElement("beforeend", $progress);
+  $main.insertAdjacentElement("beforeend", $span);
+
+  const fileReader = new FileReader();
+  fileReader.readAsDataURL(file);
+
+  fileReader.addEventListener("progress", (e) => {
+    console.log(e);
+  });
+  fileReader.addEventListener("loadend", (e) => {});
+};
+
 d.addEventListener("change", (e) => {
   if (e.target === $files) {
     console.log(e.target.files);
 
     const files = Array.from(e.target.files);
-    files.forEach((el) => uploader(el));
+    files.forEach((el) => progressUpload(el));
   }
 });
