@@ -26,7 +26,7 @@ const uploader = (file) => {
   xhr.send(formData);
 };
 
-/* Barra de progreso a la carga de los archivos. */
+//* Barra de progreso a la carga de los archivos.
 const progressUpload = (file) => {
   const $progress = d.createElement("progress"),
     $span = d.createElement("span");
@@ -40,14 +40,23 @@ const progressUpload = (file) => {
   fileReader.readAsDataURL(file);
 
   fileReader.addEventListener("progress", (e) => {
-    console.log(e);
+    //console.log(e);
+    let progress = parseInt((e.loaded * 100) / e.total);
+    $progress.value = progress;
+    $span.innerHTML = `<b>${file.name} - ${progress}%</b>`;
   });
   fileReader.addEventListener("loadend", (e) => {});
+  uploader(file);
+  setTimeout(() => {
+    $main.removeChild($progress);
+    $main.removeChild($span);
+    $files.value = "";
+  }, 3000);
 };
 
 d.addEventListener("change", (e) => {
   if (e.target === $files) {
-    console.log(e.target.files);
+    //console.log(e.target.files);
 
     const files = Array.from(e.target.files);
     files.forEach((el) => progressUpload(el));
